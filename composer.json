@@ -2,7 +2,7 @@
     "name": "axenov/blessphp",
     "description": "Tiny, fast and simple PHP boilerplate built on top of FlightPHP",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "project",
     "keywords": [
         "php",
