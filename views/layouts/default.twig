@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100">
+<head>
+    <title>{% if (meta.title) %}{{ meta.title ~ ' — ' }}{% endif %}{{ config('app.title') }}</title>
+    <meta charset="utf-8">
+    <meta name="description" content="{{ meta.description }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="{{ base_url('css/bootstrap.min.css') }}" rel="stylesheet">
+    {# <link href="{{ base_url('css/ionicons.min.css') }}" rel="stylesheet"> #}
+    {% block header %}{% endblock %}
+</head>
+<body class="d-flex flex-column h-100 bg-dark text-light align-items-center">
+
+{% block content %}{% endblock %}
+
+<footer class="footer mt-auto py-3 bg-dark">
+    <div class="text-muted text-center small">
+        {% block footer %}{% endblock %}
+    </div>
+</footer>
+
+<script src="{{ base_url('js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

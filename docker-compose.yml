@@ -1,0 +1,38 @@
+version: '3'
+
+networks:
+  bless:
+    driver: bridge
+
+services:
+
+  php:
+    container_name: bless-php
+    build: 'docker/php'
+    restart: unless-stopped
+    networks:
+      - bless
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini:ro
+      - ./log/php:/var/log/php:rw
+      - ./:/var/www:rw
+
+  nginx:
+    container_name: bless-nginx
+    image: nginx:latest
+    restart: unless-stopped
+    networks:
+      - bless
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./log/nginx:/var/log/nginx:rw
+      - ./:/var/www:ro
+    ports:
+      - '8888:80'
+    links:
+      - php
+    depends_on:
+      - php

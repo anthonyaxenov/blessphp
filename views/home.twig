@@ -1,0 +1,31 @@
+{% extends "layouts/default.twig" %}
+
+{% block header %}
+    <style>
+        .content {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            margin: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <main class="content text-center">
+        <h1 class="display-1 mb-5">{{ config('app.title') }}</h1>
+        <p class="display-6 mb-5 text-muted">
+            {{ _('home.subheader') }}
+        </p>
+        <div class="d-flex pt-5 justify-content-evenly">
+            <a class="flex-column text-light" href="{{ base_url('phpinfo') }}">phpinfo()</a>
+            <a class="flex-column text-light" href="#">Docs</a>
+            <a class="flex-column text-light" href="#">GitHub</a>
+            <a class="flex-column text-light" href="#">Gitea</a>
+        </div>
+    </main>
+{% endblock %}
+
+{% block footer %}
+    John Doe &copy; {{ 'now' | date('Y') }}
+{% endblock %}

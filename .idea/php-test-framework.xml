@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpTestFrameworkVersionCache">
+    <tools_cache>
+      <tool tool_name="PHPUnit">
+        <cache>
+          <versions>
+            <info id="Local" version="PHPUnit version can't be detected. Default PHP interpreter is not local" />
+            <info id="interpreter-62a9f748-e874-4c7a-855a-2f5dd2b8500e" version="9.5.24" />
+          </versions>
+        </cache>
+      </tool>
+    </tools_cache>
+  </component>
+</project>

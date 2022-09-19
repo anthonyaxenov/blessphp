@@ -1,0 +1,8 @@
+#/.idea
+/.vscode
+/vendor
+/cache/*
+/log/*
+*.log
+.env
+!/**/.gitkeep

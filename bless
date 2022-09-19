@@ -1,0 +1,37 @@
+#!/bin/bash
+# https://gist.github.com/anthonyaxenov/89c99e09ddb195985707e2b24a57257d
+
+CONTAINER="bless-php" # the name of the container in which to 'exec' something
+APP_URL='http://localhost:8888/' # change this port according to $CONTAINER
+
+CONFIG="$(dirname $([ -L $0 ] && readlink -f $0 || echo $0))/docker-compose.yml" # path to compose yml file
+CMD="docker compose -f $CONFIG" # docker-compose command
+
+web_browser() {
+    if which xdg-web > /dev/null; then
+        xdg-web "$1" </dev/null >/dev/null 2>&1 & disown
+    elif which gnome-web > /dev/null; then
+        gnome-web "$1" </dev/null >/dev/null 2>&1 & disown
+    fi
+}
+
+case "$1" in
+    '' | 'help'   ) echo -e "Provide one of operations: \t init, start, stop, up, down, restart, rebuild, web";
+                    echo "Otherwise all args will passed to 'docker exec -ti $CONTAINER ...'" ;;
+    'init'        ) cp .env.example .env && ./bless up && ./bless composer i && ./bless web ;;
+    'up'          ) $CMD up -d --build ;;
+    'start'       ) $CMD start ;;
+    'restart'     ) $CMD stop && $CMD start ;;
+    'stop'        ) $CMD stop ;;
+    'down'        ) $CMD down --remove-orphans ;;
+    'rebuild'     ) $CMD down --remove-orphans && $CMD up -d --build ;;
+    'web'         ) web_browser $APP_URL && echo -e "\nYou're welcome!\n\t$APP_URL" ;;
+    'clear'       ) ./bless composer clear ;;
+    'clear-views' ) ./bless composer clear-views ;;
+    'clear-logs'  ) ./bless composer clear-logs ;;
+    'ip'|'ips'    ) docker-compose ps -q \
+                    | xargs -n 1 docker inspect --format '{{.Name}}{{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' \
+                    | sed -e 's#^/##' \
+                    | column -t ;;
+    *             ) docker exec -ti $CONTAINER $@
+esac
